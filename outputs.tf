@@ -14,6 +14,6 @@ output "main_network_details" {
     cidr         = infoblox_ipv4_network_container.network.cidr
     network_view = infoblox_ipv4_network_container.network.network_view
     comment      = infoblox_ipv4_network_container.network.comment
-    parent_cidr  = var.main_network.parent_cidr
+    parent_cidr  = var.network.parent_cidr
   }
 }

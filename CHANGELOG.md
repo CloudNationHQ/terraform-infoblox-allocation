@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.0.0...v1.1.0) (2025-07-09)
+
+
+### Features
+
+* update documentation ([#3](https://github.com/CloudNationHQ/terraform-infoblox-allocation/issues/3)) ([271a09c](https://github.com/CloudNationHQ/terraform-infoblox-allocation/commit/271a09c48541b99050919309cbc340023369c291))
+
 ## 1.0.0 (2025-07-09)
 
 

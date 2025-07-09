@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.2.0...v1.2.1) (2025-07-09)
+
+
+### Bug Fixes
+
+* parent cidr reference ([#10](https://github.com/CloudNationHQ/terraform-infoblox-allocation/issues/10)) ([89c531b](https://github.com/CloudNationHQ/terraform-infoblox-allocation/commit/89c531b1417191b6964a52ebd219473acc2c7ff0))
+
 ## [1.2.0](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.1.2...v1.2.0) (2025-07-09)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.1.1...v1.1.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* remove unused variables ([#7](https://github.com/CloudNationHQ/terraform-infoblox-allocation/issues/7)) ([098bf97](https://github.com/CloudNationHQ/terraform-infoblox-allocation/commit/098bf97fc995d7dd30bd9975a5c3157621188946))
+
 ## [1.1.1](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.1.0...v1.1.1) (2025-07-09)
 
 

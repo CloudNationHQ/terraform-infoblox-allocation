@@ -16,7 +16,6 @@ resource "infoblox_ipv4_network_container" "network" {
   ext_attrs           = jsonencode(var.network.ext_attrs)
 
   depends_on = [
-    infoblox_ipv4_network_container.containers,
     data.infoblox_ipv4_network_container.existing_parent
   ]
 }

@@ -50,22 +50,6 @@ object({
 
 The following input variables are optional (have default values):
 
-### <a name="input_containers"></a> [containers](#input\_containers)
-
-Description: Map of network containers to create (optional - will create if they don't exist)
-
-Type:
-
-```hcl
-map(object({
-    cidr      = string
-    comment   = optional(string, "")
-    ext_attrs = optional(map(string), {})
-  }))
-```
-
-Default: `{}`
-
 ### <a name="input_network_view"></a> [network\_view](#input\_network\_view)
 
 Description: Infoblox network view
@@ -81,14 +65,6 @@ The following outputs are exported:
 ### <a name="output_azure_vnet_address_space"></a> [azure\_vnet\_address\_space](#output\_azure\_vnet\_address\_space)
 
 Description: Main VNet CIDR for Azure consumption - like allocation\_cidr
-
-### <a name="output_container_cidrs"></a> [container\_cidrs](#output\_container\_cidrs)
-
-Description: Simple map of container names to CIDR blocks
-
-### <a name="output_containers"></a> [containers](#output\_containers)
-
-Description: Created network containers with their details
 
 ### <a name="output_main_network_cidr"></a> [main\_network\_cidr](#output\_main\_network\_cidr)
 

@@ -4,16 +4,6 @@ variable "network_view" {
   default     = "default"
 }
 
-variable "containers" {
-  description = "Map of network containers to create (optional - will create if they don't exist)"
-  type = map(object({
-    cidr      = string
-    comment   = optional(string, "")
-    ext_attrs = optional(map(string), {})
-  }))
-  default = {}
-}
-
 variable "network" {
   description = "Contains network configuration"
   type = object({

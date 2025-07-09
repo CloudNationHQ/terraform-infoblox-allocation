@@ -1,6 +1,6 @@
 # existing containers
 data "infoblox_ipv4_network_container" "existing_parent" {
-  for_each = toset(compact([var.main_network.parent_cidr]))
+  for_each = toset(compact([var.network.parent_cidr]))
   filters = {
     network_view = var.network_view
     network      = each.value

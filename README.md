@@ -21,17 +21,16 @@ The following providers are used by this module:
 
 The following resources are used by this module:
 
-- [infoblox_ipv4_network_container.containers](https://registry.terraform.io/providers/infobloxopen/infoblox/latest/docs/resources/ipv4_network_container) (resource)
-- [infoblox_ipv4_network_container.main_network](https://registry.terraform.io/providers/infobloxopen/infoblox/latest/docs/resources/ipv4_network_container) (resource)
+- [infoblox_ipv4_network_container.network](https://registry.terraform.io/providers/infobloxopen/infoblox/latest/docs/resources/ipv4_network_container) (resource)
 - [infoblox_ipv4_network_container.existing_parent](https://registry.terraform.io/providers/infobloxopen/infoblox/latest/docs/data-sources/ipv4_network_container) (data source)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_main_network"></a> [main\_network](#input\_main\_network)
+### <a name="input_network"></a> [network](#input\_network)
 
-Description: Main network configuration
+Description: Contains network configuration
 
 Type:
 

@@ -21,20 +21,17 @@ output "main_network_details" {
 output "subnet_cidrs" {
   description = "Map of subnet CIDRs"
   value = {
-    for key, subnet_config in var.subnets : key => (
-      # Try to get allocated subnet CIDR, fallback to container CIDR
-      try(infoblox_ipv4_network.subnets[key].cidr, infoblox_ipv4_network_container.network.cidr)
-    )
+    for key, subnet in infoblox_ipv4_network.subnets : key => subnet.cidr
   }
 }
 
 output "subnet_details" {
   description = "Complete subnet details"
   value = {
-    for key, subnet_config in var.subnets : key => {
-      cidr         = try(infoblox_ipv4_network.subnets[key].cidr, infoblox_ipv4_network_container.network.cidr)
-      network_view = var.network_view
-      comment      = subnet_config.comment
+    for key, subnet in infoblox_ipv4_network.subnets : key => {
+      cidr         = subnet.cidr
+      network_view = subnet.network_view
+      comment      = subnet.comment
       parent_cidr  = infoblox_ipv4_network_container.network.cidr
     }
   }

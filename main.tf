@@ -7,12 +7,9 @@ resource "infoblox_ipv4_network_container" "network" {
   ext_attrs           = jsonencode(var.network.ext_attrs)
 }
 
-# subnets - only when subnets are smaller than the container
+# subnet networks - always create subnet resources
 resource "infoblox_ipv4_network" "subnets" {
-  for_each = {
-    for k, v in var.subnets : k => v
-    if v.prefix_length > var.network.prefix_length
-  }
+  for_each = var.subnets
 
   parent_cidr         = infoblox_ipv4_network_container.network.cidr
   allocate_prefix_len = each.value.prefix_length

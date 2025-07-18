@@ -18,6 +18,15 @@ output "main_network_details" {
   }
 }
 
+output "debug_raw_infoblox" {
+  value = {
+    container_cidr = infoblox_ipv4_network_container.network.cidr
+    subnet_resources = infoblox_ipv4_network.subnets
+    subnet_keys = keys(infoblox_ipv4_network.subnets)
+    var_subnet_keys = keys(var.subnets)
+  }
+}
+
 output "debug_subnets" {
   description = "Debug subnet resources"
   value = {

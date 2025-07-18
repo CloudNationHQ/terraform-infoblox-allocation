@@ -20,23 +20,36 @@ output "main_network_details" {
 
 output "subnet_cidrs" {
   description = "Map of subnet CIDRs"
-  value = {
-    for key, subnet_config in var.subnets : key => (
-      subnet_config.prefix_length > var.network.prefix_length ?
-      infoblox_ipv4_network.subnets[key].cidr :
-      infoblox_ipv4_network_container.network.cidr
-    )
-  }
+  value = merge(
+    {
+      for key, subnet_config in var.subnets : key => infoblox_ipv4_network_container.network.cidr
+      if subnet_config.prefix_length <= var.network.prefix_length
+    },
+    {
+      for key, subnet in infoblox_ipv4_network.subnets : key => subnet.cidr
+    }
+  )
 }
 
 output "subnet_details" {
   description = "Complete subnet details"
-  value = {
-    for key, subnet_config in var.subnets : key => {
-      cidr         = subnet_config.prefix_length > var.network.prefix_length ? infoblox_ipv4_network.subnets[key].cidr : infoblox_ipv4_network_container.network.cidr
-      network_view = var.network_view
-      comment      = subnet_config.comment
-      parent_cidr  = infoblox_ipv4_network_container.network.cidr
+  value = merge(
+    {
+      for key, subnet_config in var.subnets : key => {
+        cidr         = infoblox_ipv4_network_container.network.cidr
+        network_view = var.network_view
+        comment      = subnet_config.comment
+        parent_cidr  = infoblox_ipv4_network_container.network.cidr
+      }
+      if subnet_config.prefix_length <= var.network.prefix_length
+    },
+    {
+      for key, subnet in infoblox_ipv4_network.subnets : key => {
+        cidr         = subnet.cidr
+        network_view = subnet.network_view
+        comment      = subnet.comment
+        parent_cidr  = infoblox_ipv4_network_container.network.cidr
+      }
     }
-  }
+  )
 }

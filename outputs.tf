@@ -17,3 +17,26 @@ output "main_network_details" {
     parent_cidr  = var.network.parent_cidr
   }
 }
+
+output "subnet_cidrs" {
+  description = "Map of subnet CIDRs"
+  value = {
+    for key, subnet_config in var.subnets : key => (
+      subnet_config.prefix_length > var.network.prefix_length ?
+      infoblox_ipv4_network.subnets[key].cidr :
+      infoblox_ipv4_network_container.network.cidr
+    )
+  }
+}
+
+output "subnet_details" {
+  description = "Complete subnet details"
+  value = {
+    for key, subnet_config in var.subnets : key => {
+      cidr         = subnet_config.prefix_length > var.network.prefix_length ? infoblox_ipv4_network.subnets[key].cidr : infoblox_ipv4_network_container.network.cidr
+      network_view = var.network_view
+      comment      = subnet_config.comment
+      parent_cidr  = infoblox_ipv4_network_container.network.cidr
+    }
+  }
+}

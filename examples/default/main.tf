@@ -25,11 +25,13 @@ module "allocation_network" {
 
   network_view = "default"
   network      = each.value.network
+  subnets      = each.value.subnets
 }
 
 module "network" {
   source   = "cloudnationhq/vnet/azure"
   version  = "~> 8.0"
+
   for_each = local.vnets
 
   naming = local.naming

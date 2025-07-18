@@ -6,7 +6,7 @@ locals {
       network = {
         name          = "nw-p-runners-001"
         parent_cidr   = "10.192.0.0/16"
-        prefix_length = 34
+        prefix_length = 27
         comment       = "nw-p-001"
         ext_attrs = {
           "Network Object Name" = "net-we-nw-p-runners-001"
@@ -46,9 +46,6 @@ locals {
       location       = vnet_config.location
       resource_group = module.rg.groups.runners.name
       address_space  = [
-        length(vnet_config.subnets) == 1 &&
-        values(vnet_config.subnets)[0].prefix_length == vnet_config.network.prefix_length ?
-        module.allocation_subnets["${vnet_key}_${keys(vnet_config.subnets)[0]}"].subnet_cidr :
         module.allocation_network[vnet_key].azure_vnet_address_space
       ]
       dns_servers    = ["10.224.2.6", "10.228.2.6"]
@@ -57,7 +54,7 @@ locals {
           network_security_group = {
             name = subnet_config.nsg_name
           }
-          address_prefixes = [module.allocation_subnets["${vnet_key}_${subnet_name}"].subnet_cidr]
+          address_prefixes = [module.allocation_network[vnet_key].azure_vnet_address_space]
           name             = subnet_config.name
         }
       }

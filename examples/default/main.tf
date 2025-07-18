@@ -18,8 +18,7 @@ module "rg" {
 }
 
 module "allocation_network" {
-  source  = "cloudnationhq/allocation/infoblox"
-  version = "~> 1.0"
+  source = "git::https://github.com/CloudNationHQ/terraform-infoblox-allocation.git?ref=feat/small-refactor"
 
   for_each = local.vnets
 

@@ -40,7 +40,7 @@ output "debug_subnets" {
 output "subnet_cidrs" {
   description = "Map of subnet CIDRs"
   value = {
-    for key, subnet_config in var.subnets : key => infoblox_ipv4_network.subnets[key].cidr
+    for key in keys(var.subnets) : key => infoblox_ipv4_network.subnets[key].cidr
   }
 }
 

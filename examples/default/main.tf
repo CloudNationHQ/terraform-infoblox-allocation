@@ -17,47 +17,36 @@ module "rg" {
   }
 }
 
-module "infoblox_main_network" {
-  source  = "cloudnationhq/network/infoblox"
+module "allocation_network" {
+  source  = "cloudnationhq/allocation/infoblox"
   version = "~> 1.0"
+
+  for_each = local.vnets
 
   network_view = "default"
-
-  main_network = {
-    name          = "demo"
-    parent_cidr   = "10.207.252.0/22"
-    prefix_length = 24
-    comment       = "Main network for demo"
-    ext_attrs = {
-      "Customer"    = "YourCompany"
-      "Environment" = "Production"
-    }
-  }
+  network      = each.value.network
 }
 
-module "infoblox_subnets" {
-  source  = "cloudnationhq/network/infoblox//modules/subnet"
+module "allocation_subnets" {
+  source  = "cloudnationhq/allocation/infoblox//modules/network"
   version = "~> 1.0"
 
-  for_each = local.subnets
+  for_each = local.flattened_subnets
 
-  network_view     = "default"
-  parent_cidr      = module.infoblox_main_network.main_network_cidr
+  network_view     = each.value.network_view
+  parent_cidr      = module.allocation_network[each.value.vnet_key].main_network_cidr
   prefix_length    = each.value.prefix_length
   comment          = each.value.comment
   network_function = each.value.network_function
   location_code    = each.value.location_code
+  ext_attrs        = each.value.ext_attrs
 }
 
 module "network" {
-  source  = "cloudnationhq/vnet/azure"
-  version = "~> 8.0"
-  naming  = local.naming
+  source   = "cloudnationhq/vnet/azure"
+  version  = "~> 8.0"
+  for_each = local.vnets
 
-  vnet = local.vnet
-
-  depends_on = [
-    module.infoblox_main_network,
-    module.infoblox_subnets
-  ]
+  naming = local.naming
+  vnet   = local.vnet_configs[each.key]
 }

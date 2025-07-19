@@ -1,57 +1,19 @@
-output "main_network_cidr" {
-  description = "Main network CIDR - like allocation_cidr"
-  value       = infoblox_ipv4_network_container.network.cidr
-}
-
 output "azure_vnet_address_space" {
-  description = "Main VNet CIDR for Azure consumption - like allocation_cidr"
-  value       = infoblox_ipv4_network_container.network.cidr
+  description = "Main VNet CIDR for Azure consumption"
+  value       = infoblox_ipv4_network.network.cidr
 }
 
-output "main_network_details" {
-  description = "Complete main network details"
+output "allocation_cidr" {
+  description = "Allocated network CIDR"
+  value       = infoblox_ipv4_network.network.cidr
+}
+
+output "network_details" {
+  description = "Complete network details"
   value = {
-    cidr         = infoblox_ipv4_network_container.network.cidr
-    network_view = infoblox_ipv4_network_container.network.network_view
-    comment      = infoblox_ipv4_network_container.network.comment
+    cidr         = infoblox_ipv4_network.network.cidr
+    network_view = infoblox_ipv4_network.network.network_view
+    comment      = infoblox_ipv4_network.network.comment
     parent_cidr  = var.network.parent_cidr
-  }
-}
-
-output "debug_raw_infoblox" {
-  value = {
-    container_cidr = infoblox_ipv4_network_container.network.cidr
-    subnet_resources = infoblox_ipv4_network.subnets
-    subnet_keys = keys(infoblox_ipv4_network.subnets)
-    var_subnet_keys = keys(var.subnets)
-  }
-}
-
-output "debug_subnets" {
-  description = "Debug subnet resources"
-  value = {
-    for key, subnet in infoblox_ipv4_network.subnets : key => {
-      cidr = subnet.cidr
-      comment = subnet.comment
-    }
-  }
-}
-
-output "subnet_cidrs" {
-  description = "Map of subnet CIDRs"
-  value = {
-    for key in keys(var.subnets) : key => infoblox_ipv4_network.subnets[key].cidr
-  }
-}
-
-output "subnet_details" {
-  description = "Complete subnet details"
-  value = {
-    for key, subnet_config in var.subnets : key => {
-      cidr         = infoblox_ipv4_network.subnets[key].cidr
-      network_view = infoblox_ipv4_network.subnets[key].network_view
-      comment      = infoblox_ipv4_network.subnets[key].comment
-      parent_cidr  = infoblox_ipv4_network_container.network.cidr
-    }
   }
 }

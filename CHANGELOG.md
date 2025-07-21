@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.2.1...v1.3.0) (2025-07-21)
+
+
+### Features
+
+* small refactor ([#13](https://github.com/CloudNationHQ/terraform-infoblox-allocation/issues/13)) ([1fa76f8](https://github.com/CloudNationHQ/terraform-infoblox-allocation/commit/1fa76f8bb07e4b347a7cbe574d41aa774cd43e2a))
+
 ## [1.2.1](https://github.com/CloudNationHQ/terraform-infoblox-allocation/compare/v1.2.0...v1.2.1) (2025-07-09)
 
 

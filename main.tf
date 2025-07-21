@@ -1,4 +1,4 @@
-# single network allocation - serves as vnet allocation only
+# single network allocation
 resource "infoblox_ipv4_network" "network" {
   parent_cidr         = var.network.parent_cidr
   allocate_prefix_len = var.network.prefix_length

@@ -2,7 +2,7 @@ module "naming" {
   source  = "cloudnationhq/naming/azure"
   version = "~> 0.24"
 
-  suffix = ["demo", "dev"]
+  suffix = [var.location, var.environment]
 }
 
 module "rg" {
@@ -10,54 +10,29 @@ module "rg" {
   version = "~> 2.0"
 
   groups = {
-    demo = {
+    network = {
       name     = module.naming.resource_group.name_unique
       location = "westeurope"
     }
   }
 }
 
-module "infoblox_main_network" {
-  source  = "cloudnationhq/network/infoblox"
+module "allocation_network" {
+  source  = "cloudnationhq/allocation/infoblox"
   version = "~> 1.0"
+
+  for_each = local.vnets
 
   network_view = "default"
-
-  main_network = {
-    name          = "demo"
-    parent_cidr   = "10.207.252.0/22"
-    prefix_length = 24
-    comment       = "Main network for demo"
-    ext_attrs = {
-      "Customer"    = "YourCompany"
-      "Environment" = "Production"
-    }
-  }
-}
-
-module "infoblox_subnets" {
-  source  = "cloudnationhq/network/infoblox//modules/subnet"
-  version = "~> 1.0"
-
-  for_each = local.subnets
-
-  network_view     = "default"
-  parent_cidr      = module.infoblox_main_network.main_network_cidr
-  prefix_length    = each.value.prefix_length
-  comment          = each.value.comment
-  network_function = each.value.network_function
-  location_code    = each.value.location_code
+  network      = each.value.network
 }
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
   version = "~> 8.0"
-  naming  = local.naming
 
-  vnet = local.vnet
+  for_each = local.vnets
 
-  depends_on = [
-    module.infoblox_main_network,
-    module.infoblox_subnets
-  ]
+  naming = local.naming
+  vnet   = local.vnet_configs[each.key]
 }
